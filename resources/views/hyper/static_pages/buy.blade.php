@@ -43,7 +43,7 @@
                     <div class="form-group">
                         @if(!empty($wholesale_price) && is_array($wholesale_price))
                         <div class="alert alert-dark bg-white text-dark mb-0" role="alert">
-                            {{-- 批发优惠 --}}    
+                            {{-- 批发优惠 --}}
                              <h5>{{ __('hyper.buy_wholesale_discount') }}：</h5>
                             @foreach($wholesale_price as $ws)
                                 {{-- 购买数量 xxx 个或以上，每个 xxx 元 --}}
@@ -54,19 +54,19 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            {{-- 电子邮箱 --}} 
+                            {{-- 电子邮箱 --}}
                             <label class="col-form-label">{{ __('hyper.buy_email') }}</label>
                             <input type="hidden" name="pid" value="{{ $id }}">
-                            {{-- 接收卡密或通知 --}} 
+                            {{-- 接收卡密或通知 --}}
                             <input type="email" name="account" class="form-control" placeholder="{{ __('hyper.buy_input_account') }}">
                         </div>
                         <div class="form-group col-md-6">
-                            {{-- 购买数量 --}} 
+                            {{-- 购买数量 --}}
                             <label class="col-form-label">{{ __('hyper.buy_purchase_quantity') }}</label>
                             <div class="input-group">
                                 <input type="number" name="order_number" min="1" value="1" class="form-control mr-1" placeholder="">
                                 <div class="input-group-append">
-                                    {{-- 库存 --}} 
+                                    {{-- 库存 --}}
                                     <span style="line-height:44px">{{ __('hyper.buy_in_stock') }}({{ $in_stock }})</span>
                                 </div>
                             </div>
@@ -75,17 +75,17 @@
                     <div class="form-row">
                         @if(config('webset.isopen_searchpwd') == 1)
                         <div class="form-group col-md-6">
-                            {{-- 查询密码 --}} 
+                            {{-- 查询密码 --}}
                             <label class="col-form-label">{{ __('hyper.buy_search_password') }}</label>
-                            {{-- 查询订单密码 --}} 
+                            {{-- 查询订单密码 --}}
                             <input type="text" name="search_pwd" value="" class="form-control" placeholder="{{ __('hyper.buy_input_search_password') }}">
                         </div>
                         @endif
                         @if($isopen_coupon == 1)
                         <div class="form-group col-md-6">
-                            {{-- 优惠码 --}} 
+                            {{-- 优惠码 --}}
                             <label class="col-form-label">{{ __('hyper.buy_promo_code') }}</label>
-                            {{-- 您有优惠码吗？ --}} 
+                            {{-- 您有优惠码吗？ --}}
                             <input type="text" name="coupon_code" class="form-control" placeholder="{{ __('hyper.buy_input_promo_code') }}">
                         </div>
                         @endif
@@ -103,9 +103,13 @@
                             {{-- 支付方式 --}}
                             <label class="col-form-label">{{ __('hyper.buy_payment_method') }}</label>
                             <select class="form-control" name="payway">
-                                <option value="0">请选择支付方式</option>
+{{--                                <option value="0">请选择支付方式</option>--}}
                                 @foreach($payways as $way)
-                                <option value="{{ $way['id'] }}">{{ $way['pay_name'] }}</option>
+                                    @if($way['id'] === 1)
+                                        <option value="{{ $way['id'] }}" selected="selected">{{ $way['pay_name'] }}</option>
+                                    @else
+                                        <option value="{{ $way['id'] }}">{{ $way['pay_name'] }}</option>
+                                    @endif
                                 @endforeach
                             </select>
                         </div>
