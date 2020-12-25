@@ -100,6 +100,12 @@ class OrderController extends Controller
         $product = $this->productService->product($data['pid']);
         if (empty($product) || $product['pd_status'] != 1) throw new AppException(__('prompt.product_off_the_shelf'));
         if ($product['in_stock'] == 0 || $data['order_number'] > $product['in_stock']) throw new AppException(__('prompt.inventory_shortage'));
+
+        $buy_ip = $request->server->get('HTTP_CF_CONNECTING_IP');
+        if (!$buy_ip) {
+            $buy_ip = $request->getClientIp();
+        }
+
         // 订单缓存
         $cacheOrder = [
             'product_id' => $data['pid'], // 商品id
@@ -113,7 +119,8 @@ class OrderController extends Controller
             'buy_amount' => intval($data['order_number']), // 订单个数
             'account' => $data['account'], // 充值账号
             'search_pwd' => $data['search_pwd'] ?? 'dujiaoka',
-            'buy_ip' => $request->getClientIp(),
+//            'buy_ip' => $request->getClientIp(),
+            'buy_ip' => $buy_ip,
             'other_ipu' => ''
         ];
         // 设置订单详情。
